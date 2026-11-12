@@ -62,6 +62,8 @@ The wrist aims the can inside a box around the shoulders, so it works wherever t
 
 Example: `http://localhost:8807/?kiosk=1&depthcam=http://localhost:8777&whip=http://localhost:8889/spray/whip`
 
+`station/spray-wall@1.rcomponent.json` is a [realtime-client](https://github.com/204-ai/realtime-client) component that plays the published picture (`http://localhost:8889/spray/whep`): open it there with Open…, then put it on a layer.
+
 The trackers load from cdn.jsdelivr.net and storage.googleapis.com, like upstream's hand tracking. The page's content policy lets it connect to any http(s) address, because the camera and the media server are given by URL.
 
 ## Development

@@ -1,0 +1,20 @@
+{
+ "schemaVersion": 1,
+ "kind": "component",
+ "def": {
+  "id": "spray-wall",
+  "version": 1,
+  "name": "Spray wall",
+  "role": "source",
+  "graph": {
+   "nodes": [
+    { "id": "spray", "type": "stream", "params": { "url": "http://localhost:8889/spray/whep" }, "pos": { "x": 40, "y": 160 }, "label": "Spray" },
+    { "id": "out", "type": "out.picture", "params": {}, "pos": { "x": 320, "y": 160 } }
+   ],
+   "edges": [ { "from": { "node": "spray", "port": "out" }, "to": { "node": "out", "port": "in" } } ]
+  },
+  "params": []
+ },
+ "components": [],
+ "assets": []
+}
