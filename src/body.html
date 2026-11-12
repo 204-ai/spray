@@ -1,0 +1,219 @@
+<body class="dock">
+<div id="loading"><div><div class="logo">SPRAYLAB</div><p id="loadMsg">Mixing paint…</p></div></div>
+<header id="bar">
+  <div class="hl"><span class="brand">SPRAYLAB</span><span class="brand-ver">v{{VERSION}}</span>
+    <nav class="view-switch" id="modeBar" aria-label="Mode"><button data-mode="paint" class="on" title="Paint (P)">paint</button><button data-mode="arrange" title="Move, scale and rotate images (M)">images</button><button data-mode="build" title="Add and place walls (B)">build</button></nav>
+    <div class="status"><span><i class="led"></i>saved</span><span><i class="led off" id="ledHands"></i>hands</span></div></div>
+  <div class="transport">
+    <button id="undoTop" title="Undo (Ctrl+Z)">↶ undo</button>
+    <button id="homeBtn" class="primary" title="Back in front of the last wall you painted (Home)">⟲ back to wall</button>
+    <button id="redoTop" title="Redo (Ctrl+Shift+Z)">↷ redo</button>
+    <button class="record-key" id="recKey" title="Record video"><span class="rec-dot"></span>rec</button>
+  </div>
+  <div class="hr">
+    <button id="guideKey">? guide</button>
+    <button id="hidePanel" title="Hide tools (H)">▤ tools</button>
+    <button class="icon-key" id="fsKey" title="Full screen">⛶</button>
+    <button class="icon-key" id="themeKey" title="Light / dark theme">◐</button>
+  </div>
+</header>
+<button id="showPanel" class="btn" hidden>▤ tools</button>
+<main>
+<aside id="panel">
+  <div class="tabs" id="tabs" role="tablist"><button data-tab="paint" class="on">Paint</button><button data-tab="images">Images</button><button data-tab="yard">Yard</button><button data-tab="more">More</button></div>
+  <div class="scroll">
+
+    <section data-tab="paint">
+      <div class="grid2">
+        <button class="btn on" id="toolSpray" title="Spray can (T toggles)">Spray can</button>
+        <button class="btn" id="toolMarker" title="Paint marker (T toggles)">Paint marker</button>
+      </div>
+      <h2 id="capsTitle">Cap <span id="capWidth">—</span></h2>
+      <div class="caps" id="caps"></div>
+      <div class="capnote" id="capNote"></div>
+      <div class="row" id="fanRow" hidden><label for="fanAngle">Tip angle</label><input type="range" id="fanAngle" min="-90" max="90" step="1" value="0"><output id="fanOut">0°</output></div>
+      <div class="row" id="distRow"><label for="dist">Distance</label><input type="range" id="dist" min="2.5" max="45" step="0.5" value="12"><output id="distOut">12 cm</output></div>
+      <div class="row" id="flowRow"><label for="flow">Pressure</label><input type="range" id="flow" min="30" max="160" step="1" value="100"><output id="flowOut">100%</output></div>
+      <div class="row"><label for="dripAmt">Drips</label><input type="range" id="dripAmt" min="0" max="100" step="1" value="30"><output id="dripOut">Light</output></div>
+      <div class="grid2">
+        <button class="btn on" id="toolPaint">Paint</button>
+        <button class="btn" id="toolBuff" title="Buff / erase (X)">⌫ buff out</button>
+      </div>
+    </section>
+    <section data-tab="paint">
+      <h2>Colour <span>keys 1–9</span></h2>
+      <div class="current">
+        <input type="color" id="colorPick" value="#ff2fa8" aria-label="Custom colour">
+        <div style="flex:1;min-width:0"><div id="colorName">Neon Pink</div><div id="colorHex">#FF2FA8</div></div>
+        <button class="ghost" id="pickBtn" title="Pick a colour off the wall (I, or Alt + click)">Pick</button>
+      </div>
+      <div class="swatches" id="palette"></div>
+      <h3>From the selected image</h3>
+      <div class="swatches" id="guidePal"></div>
+      <h3>Recent</h3>
+      <div class="swatches" id="recent"></div>
+    </section>
+    <section data-tab="images">
+      <h2>Images <span id="guideStatus" class="status"></span></h2>
+      <label class="drop" for="file"><b>Drop images onto any wall</b>Drop them where you want them, paste, or click here. Add as many as you like; each becomes a traceable layer.</label>
+      <input type="file" id="file" accept="image/*" multiple hidden>
+      <div class="layers" id="layers"></div>
+      <div id="layerOpts" class="grid1" style="display:flex;flex-direction:column;gap:10px">
+        <div class="grid3" id="guideModes">
+          <button class="chip on" data-mode="shapes">Shapes</button><button class="chip" data-mode="lines">Line art</button><button class="chip" data-mode="both">Both</button>
+        </div>
+        <div class="row"><label for="gSize">Height</label><input type="range" id="gSize" min="0.1" max="8" step="0.01" value="2"><output id="gSizeOut">2 m</output></div>
+        <div class="row"><label for="gRot">Rotation</label><input type="range" id="gRot" min="-180" max="180" step="1" value="0"><output id="gRotOut">0°</output></div>
+        <div class="row"><label for="gK">Colours</label><input type="range" id="gK" min="2" max="16" step="1" value="7"><output id="gKOut">7</output></div>
+        <div class="row"><label for="gDetail">Detail</label><input type="range" id="gDetail" min="1" max="10" step="1" value="5"><output id="gDetailOut">5</output></div>
+        <div class="chips" id="guideLayers">
+          <button class="chip on" data-layer="lines">Outlines</button><button class="chip on" data-layer="fill">Colour fills</button><button class="chip on" data-layer="numbers">Numbers</button><button class="chip" data-layer="photo">Photo</button>
+        </div>
+        <div class="chips" id="lineColors">
+          <button class="chip on" data-lc="#ffffff">White lines</button><button class="chip" data-lc="#111111">Black lines</button><button class="chip" data-lc="#00f0ff">Cyan lines</button>
+        </div>
+        <div class="row"><label for="gOpacity">Opacity</label><input type="range" id="gOpacity" min="0" max="100" step="1" value="60"><output id="gOpacityOut">60%</output></div>
+        <div class="row"><label for="gLine">Line</label><input type="range" id="gLine" min="1" max="8" step="0.5" value="2.5"><output id="gLineOut">2.5</output></div>
+        <div class="grid3">
+          <button class="btn" id="guideMove" title="Move, scale, rotate on the wall (M)">Arrange</button>
+          <button class="btn" id="guideFocus">Look at it</button>
+          <button class="btn" id="guideToggle" title="G">Hide guides</button>
+        </div>
+        <button class="ghost" id="guideClear">Remove this image</button>
+      </div>
+    </section>
+    <section data-tab="images">
+      <h2>Auto paint</h2>
+      <p class="hint">Paints the selected image, or every image on its wall, like a writer would: a light sketch, big fills with fat caps, edges cut in with skinny caps, then the outlines.</p>
+      <div class="row"><label for="apSpeed">Speed</label><input type="range" id="apSpeed" min="1" max="40" step="1" value="8"><output id="apSpeedOut">8×</output></div>
+      <div class="chips">
+        <button class="chip on" id="apAll">Every image on the wall</button>
+        <button class="chip" id="apRecord">Record time-lapse</button>
+        <button class="chip on" id="apFrame">Frame the piece</button>
+        <button class="chip on" id="apSketch">Sketch first</button>
+        <button class="chip on" id="apHide">Hide guide while painting</button>
+        <button class="chip" id="apClean">Start on a clean wall</button>
+      </div>
+      <div class="grid3">
+        <button class="btn on" id="apStart">Auto paint</button>
+        <button class="btn" id="apPause" disabled>Pause</button>
+        <button class="btn" id="apStop" disabled>Stop</button>
+      </div>
+      <div class="apbar"><i id="apBar"></i></div>
+      <p class="hint" id="apStep"></p>
+    </section>
+    <section data-tab="yard">
+      <h2>Build the yard</h2>
+      <div class="grid3">
+        <button class="btn" data-add="wall">+ Wall</button>
+        <button class="btn" data-add="hoarding">+ Hoarding</button>
+        <button class="btn" data-add="train">+ Train car</button>
+      </div>
+      <p class="hint">In Build mode, click a wall to select it, drag to move it, Q / E to turn it.</p>
+      <div id="wallOpts" hidden style="display:flex;flex-direction:column;gap:10px">
+        <h3 id="wallName">Wall</h3>
+        <div class="row"><label for="wW">Width</label><input type="range" id="wW" min="1.5" max="16" step="0.1" value="6"><output id="wWOut">6 m</output></div>
+        <div class="row"><label for="wH">Height</label><input type="range" id="wH" min="1" max="6" step="0.1" value="3"><output id="wHOut">3 m</output></div>
+        <div class="grid3">
+          <button class="btn" id="wRotL">Turn ⟲</button><button class="btn" id="wRotR">Turn ⟳</button><button class="btn" id="wFocus">Look at it</button>
+        </div>
+        <div class="grid2"><button class="btn" id="wDup">Duplicate</button><button class="btn" id="wDel">Delete wall</button></div>
+        <h3>Surface</h3>
+        <div class="mats" id="mats"></div>
+      </div>
+    </section>
+    <section data-tab="yard">
+      <h2>Scene</h2>
+      <div class="chips" id="lightModes">
+        <button class="chip on" data-light="day">Day</button><button class="chip" data-light="golden">Golden hour</button><button class="chip" data-light="overcast">Overcast</button><button class="chip" data-light="night">Night</button>
+      </div>
+      <div class="chips">
+        <button class="chip on" id="aimToggle">Aim ring</button><button class="chip on" id="soundToggle">Sound</button>
+      </div>
+      <div class="row"><label for="vol">Volume</label><input type="range" id="vol" min="0" max="100" step="1" value="55"><output id="volOut">55%</output></div>
+    </section>
+    <section data-tab="more">
+      <h2>Your work</h2>
+      <p class="hint" id="saveStatus">The yard saves itself in this browser as you paint.</p>
+      <div class="grid2">
+        <button class="btn" id="undoBtn">Undo</button>
+        <button class="btn" id="redoBtn">Redo</button>
+        <button class="btn" id="projSave">Save project file</button>
+        <label class="btn" for="projFile" style="text-align:center">Open project file</label>
+        <button class="btn" id="shotBtn">Save photo</button>
+        <button class="btn" id="flatBtn">Save flat PNG</button>
+        <button class="btn" id="recBtn">Record video</button>
+        <button class="btn" id="clearBtn">Clear wall</button>
+      </div>
+      <input type="file" id="projFile" accept=".json,application/json" hidden>
+      <button class="ghost" id="newYard">New yard</button>
+    </section>
+    <section data-tab="more">
+      <h2>Hand tracking <span>camera</span></h2>
+      <p class="hint">Control a can with your hand. Open hand aims, closed fist sprays. Two people can each use a hand.</p>
+      <button class="btn" id="handsBtn">Start camera</button>
+      <canvas id="handsPrev" width="320" height="240" hidden></canvas>
+      <div class="row" style="grid-template-columns:auto 1fr"><input class="mini" type="color" id="p2Color" value="#3aa6ff" aria-label="Player 2 colour"><label for="p2Color">Player 2 colour (Player 1 uses the main colour)</label></div>
+      <p class="hint" id="handsStatus">Camera off.</p>
+    </section>
+    <section data-tab="more" id="netSec">
+      <h2>Paint together <span id="netCount"></span></h2>
+      <p class="hint" id="netStatus">Connecting…</p>
+      <div class="row" style="grid-template-columns:76px 1fr"><label for="nick">Your name</label><input type="text" id="nick" maxlength="24" placeholder="Writer"></div>
+      <ul class="peers" id="peers"></ul>
+      <p class="hint">Everyone with this page open shares the yard and sees each other's cans live. People who join later see new paint from that point on.</p>
+    </section>
+    <section data-tab="more">
+      <h2>Controls <span>field notes</span></h2>
+      <div class="keys">
+        <kbd>Hold click</kbd><span>Spray or draw (or hold Space)</span>
+        <kbd>Wheel</kbd><span>Zoom in and out</span>
+        <kbd>Middle-drag</kbd><span>Look around (right-drag works too)</span>
+        <kbd>Shift + middle-drag</kbd><span>Pan</span>
+        <kbd>W A S D</kbd><span>Walk around the yard</span>
+        <kbd>Alt + wheel · Z / C</kbd><span>Can closer to / further from the wall</span>
+        <kbd>T</kbd><span>Switch spray can / marker</span>
+        <kbd>[ ]</kbd><span>Previous / next cap or marker</span>
+        <kbd>Q / E</kbd><span>Rotate the fan cap, chisel tip, image or wall</span>
+        <kbd>R</kbd><span>Shake the can or pump the marker</span>
+        <kbd>X</kbd><span>Toggle buff (erase)</span>
+        <kbd>P · M · B</kbd><span>Paint · Images · Build mode</span>
+        <kbd>G</kbd><span>Show or hide guides</span>
+        <kbd>F</kbd><span>Fly to the wall under the cursor</span>
+        <kbd>Home</kbd><span>Back in front of the last wall you painted</span>
+        <kbd>Delete</kbd><span>Remove the selected image or wall</span>
+        <kbd>Ctrl Z · Ctrl Shift Z</kbd><span>Undo · redo</span>
+        <kbd>Shift while painting</kbd><span>Ruler-straight line, level or plumb</span>
+        <kbd>I · Alt + click</kbd><span>Pick a colour off the wall</span>
+        <kbd>Two fingers</kbd><span>On touch screens: look around and pinch to zoom</span>
+        <kbd>Esc</kbd><span>Stop auto paint, back to Paint mode</span>
+        <kbd>H</kbd><span>Hide tools</span>
+      </div>
+    </section>
+  <div class="family-note"><b>JAS.BLACK</b><small>tool family · paint · snap · fault · growth</small></div></div>
+</aside>
+<div id="monitor">
+  <div class="monitor-top"><span><i class="led"></i>yard · 3d view</span><span>drop images on any wall</span></div>
+  <canvas id="gl" aria-label="3D yard of walls. Hold the left mouse button to spray."></canvas>
+  <div id="hud">
+  <span class="dot" id="hudDot"></span>
+  <span id="hudCap">Pro Skinny</span>
+  <span><span class="k">dist</span> <span id="hudDist">12.0cm</span></span>
+  <span class="hide-s"><span class="k">⌀</span> <span id="hudW">1.6cm</span></span>
+  <span class="hide-s"><span class="k" id="hudPK">psi</span></span><span class="meter hide-s"><i id="hudP" style="width:100%"></i></span>
+  <span class="mode" id="hudMode">PAINT</span>
+  <span id="hudRec" hidden>● REC</span>
+</div>
+</div>
+</main>
+<footer id="foot"><span><kbd>click</kbd><small>spray</small><kbd>wheel</kbd><small>zoom</small><kbd>mid-drag</kbd><small>look</small><kbd>wasd</kbd><small>walk</small><kbd>h</kbd><small>tools</small><kbd>home</kbd><small>back to wall</small></span><span class="tagline">SPRAYLAB · A YARD OF WALLS, ONE CAN AT A TIME</span></footer>
+
+
+<div id="dropOverlay" hidden>Drop it on a wall</div>
+<div id="toast" style="opacity:0"></div>
+<div id="modal" hidden><div class="box">
+  <div class="bar"><b id="modalTitle">Saved</b><button class="ghost" id="modalClose">Close</button></div>
+  <img id="modalImg" alt="Export preview">
+  <video id="modalVid" controls playsinline loop hidden></video>
+  <div class="bar"><span class="hint">If the download button is blocked, right-click the preview to save it.</span><button class="btn on" id="modalDl">Download</button></div>
+</div></div>

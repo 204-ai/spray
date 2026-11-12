@@ -1,0 +1,57 @@
+# Checks the build and publishes Spraylab to GitHub Pages on every push to main.
+# One-time setup: repo Settings → Pages → Source: "GitHub Actions"; custom domain spray.jas.black.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check JavaScript syntax
+        run: |
+          for f in src/*.js; do node --check "$f"; done
+      - name: Check index.html is up to date
+        run: |
+          python3 build.py
+          git diff --exit-code index.html || { echo "::error::index.html is out of date. Run 'python3 build.py' and commit the result."; exit 1; }
+      - name: Prepare site
+        run: |
+          mkdir -p _site/vendor
+          cp index.html CNAME _site/
+          cp vendor/three.min.js _site/vendor/
+          cp public/* _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
