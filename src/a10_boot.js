@@ -77,6 +77,7 @@ async function boot(){
   toast(restored ? 'Welcome back. Your yard is how you left it.' : 'Hold the mouse button to spray. Scroll zooms, middle-drag looks around, Shift + middle-drag pans.');
   requestAnimationFrame(t => { last = t; frame(t); });
   initRoom();
+  stationInit();
   window.__spraylab = { STORE, autosaveTick, undo, redo, pickColor, exportProject, sceneState, newYard, P, S, G, AP, me, walls, cam, apStart, apTick, planAuto, flushAll, setTool, setColor, selectCap, selectMarker, setDist, setMode, setLighting, addWall, Wall, painterTick };
 }
 boot().catch(e => { console.error(e); fatal('Something went wrong while starting: ' + (e && e.message || e)); });

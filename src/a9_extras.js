@@ -116,6 +116,7 @@ async function startHands(){
 }
 function stopHands(){
   HANDS.on = false; if (HANDS.stream) HANDS.stream.getTracks().forEach(t => t.stop());
+  if (HANDS.ext){ HANDS.ext = null; stationStop(); }
   HANDS.painters.forEach(p => p.avatar.dispose()); HANDS.painters = []; HANDS.state = [];
   $('#handsBtn').textContent = 'Start camera'; $('#ledHands').classList.add('off'); $('#handsPrev').hidden = true; $('#handsStatus').textContent = 'Camera off.';
 }
@@ -123,7 +124,8 @@ const FINGERS = [[8,6],[12,10],[16,14],[20,18]];
 function handsTick(dt){
   if (!HANDS.on) return false;
   const v = HANDS.video; let res = null;
-  if (v.readyState >= 2 && v.currentTime !== HANDS.lastT){ HANDS.lastT = v.currentTime; try { res = HANDS.lm.detectForVideo(v, performance.now()); } catch (e) {} }
+  if (HANDS.ext) HANDS.ext(dt);   // station mode: another tracker fills HANDS.state (a12_station.js)
+  else if (v.readyState >= 2 && v.currentTime !== HANDS.lastT){ HANDS.lastT = v.currentTime; try { res = HANDS.lm.detectForVideo(v, performance.now()); } catch (e) {} }
   if (res){
     const hands = (res.landmarks || []).map(lm => ({ lm, x:1 - (lm[0].x + lm[5].x + lm[9].x + lm[13].x + lm[17].x)/5, y:(lm[0].y + lm[5].y + lm[9].y + lm[13].y + lm[17].y)/5 }));
     hands.sort((a, b) => a.x - b.x);
@@ -149,7 +151,7 @@ function handsTick(dt){
     if (h){ if (h.wall !== p.wall){ p.wall = h.wall; p.u = h.u; p.v = h.v; p.prev = null; } else { const k = 1 - Math.exp(-dt*18); p.u += (h.u - p.u)*k; p.v += (h.v - p.v)*k; } p.visible = true;
       if (spraying && !s.was){ pushUndo(h.wall); lastWall = h.wall; } }
     s.was = spraying;
-    s.d += (clamp(.016 / Math.max(.02, s.size), .03, .4) - s.d) * .15; p.d = S.tool === 'marker' ? 0 : s.d;
+    s.d += ((s.dExt != null ? s.dExt : clamp(.016 / Math.max(.02, s.size), .03, .4)) - s.d) * .15; p.d = S.tool === 'marker' ? 0 : s.d;
     painterTick(p, dt, spraying && !!h); netSample(p, dt, i + 1);
     if (p.spraying) any = p;
   });

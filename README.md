@@ -44,6 +44,26 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000. `index.html` needs `vendor/three.min.js` beside it. Icons live in `public/` and are copied next to the page on deploy.
 
+## Station mode (204-ai fork)
+
+For running Spray as a picture source in a studio, with no mouse: URL parameters switch it on, and without them the page is the same as upstream.
+
+| Parameter | What it does |
+| --- | --- |
+| `kiosk=1` | Picture only: no bar, panel, HUD or messages. |
+| `whip=<url>` | Publishes the picture to a WHIP endpoint, for example mediamtx at `http://localhost:8889/spray/whip`. |
+| `depthcam=<url>` | Hands from a [depthcam-studio](https://github.com/204-ai/depthcam-studio) server, for example `http://localhost:8777`: the body pose from its colour video, reach from its depth frames. |
+| `trigger=reach\|raise\|fist` | What sprays. `reach` (default): the hand held out toward the camera, about 28 cm in front of the shoulder, and the further out the closer the can. `raise`: the hand above its shoulder. `fist`: a closed hand, read by the hand tracker on a close-up cut around each wrist. The **K** key steps through them. |
+| `mirror=0` | Left and right as the camera sees them (default: as in a mirror). |
+| `debug=1` | A small view of what the tracker sees. |
+| `video=<url>` | With `depthcam`: a video file in place of the camera, for trying gestures with nobody there. |
+
+The wrist aims the can inside a box around the shoulders, so it works wherever the person stands. One person paints with both hands; two people get a can each. A hand hanging down holds no can.
+
+Example: `http://localhost:8807/?kiosk=1&depthcam=http://localhost:8777&whip=http://localhost:8889/spray/whip`
+
+The trackers load from cdn.jsdelivr.net and storage.googleapis.com, like upstream's hand tracking. The page's content policy lets it connect to any http(s) address, because the camera and the media server are given by URL.
+
 ## Development
 
 ```
@@ -59,6 +79,7 @@ src/            editable source
   a7_input.js   mouse, keyboard, touch
   a8_ui.js      panel and top bar
   a9_extras.js  hand tracking, colour picking, live room
+  a12_station.js  station mode: kiosk view, depth cam hands, WHIP out (204-ai fork)
   a11_store.js  autosave (IndexedDB) and project files
   a10_boot.js   start-up and render loop
   model.js      the JAS spray can mesh and label texture

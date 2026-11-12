@@ -138,6 +138,10 @@ body.float #bar{position:fixed;z-index:6;top:12px;left:12px;right:12px;backgroun
 body.float #panel{position:fixed;z-index:5;top:76px;left:12px;bottom:46px;width:300px;background:color-mix(in srgb,var(--case) 88%,transparent);border:1px solid var(--line);border-radius:12px;padding:10px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 body.float #hud{position:fixed;z-index:5;left:50%;transform:translateX(-50%);bottom:12px;border:1px solid #1d2a22;border-radius:8px;height:26px}
 body.float footer#foot{display:none}
+/* station mode, kiosk=1: the picture and nothing else */
+body.kiosk{background:#000}
+body.kiosk #bar,body.kiosk #panel,body.kiosk #hud,body.kiosk #toast,body.kiosk #showPanel,body.kiosk #dropOverlay{display:none!important}
+body.kiosk #gl{cursor:none}
 
 /* ---- overlays ---- */
 #showPanel{position:fixed;z-index:6;left:12px;bottom:12px}

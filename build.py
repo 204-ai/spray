@@ -13,14 +13,14 @@ import pathlib, sys
 ROOT = pathlib.Path(__file__).resolve().parent
 SRC = ROOT / 'src'
 PARTS = ['a1_core.js', 'a2_materials.js', 'a3_walls.js', 'a4_paint.js', 'a5_guide.js', 'a6_auto.js',
-         'a7_input.js', 'a8_ui.js', 'a9_extras.js', 'a11_store.js', 'a10_boot.js']
+         'a7_input.js', 'a8_ui.js', 'a9_extras.js', 'a11_store.js', 'a12_station.js', 'a10_boot.js']
 
 CSP = ("default-src 'self'; "
        "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; "
        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
        "font-src https://fonts.gstatic.com; "
        "img-src 'self' data: blob:; media-src 'self' blob: mediastream:; "
-       "connect-src 'self' data: blob: https://cdn.jsdelivr.net https://storage.googleapis.com; "
+       "connect-src 'self' data: blob: http: https:; "
        "worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'")
 
 
