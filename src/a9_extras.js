@@ -68,7 +68,7 @@ function startRecording(kind){
     const ext = REC.mime.includes('mp4') ? 'mp4' : 'webm', blob = new Blob(REC.chunks, {type:REC.mime.split(';')[0]});
     REC.stream.getTracks().forEach(t => t.stop());
     const secs = Math.round((performance.now() - REC.t0) / 1000);
-    showExport(blob, `spraylab-${REC.kind === 'timelapse' ? 'timelapse' : 'recording'}.${ext}`, `${REC.kind === 'timelapse' ? 'Time-lapse' : 'Recording'} · ${secs} s · ${ext.toUpperCase()}`, true);
+    showExport(blob, `spray-${REC.kind === 'timelapse' ? 'timelapse' : 'recording'}.${ext}`, `${REC.kind === 'timelapse' ? 'Time-lapse' : 'Recording'} · ${secs} s · ${ext.toUpperCase()}`, true);
   };
   REC.rec.start(500);
   $('#recBtn').textContent = 'Stop recording'; $('#recBtn').classList.add('armed'); $('#hudRec').hidden = false;

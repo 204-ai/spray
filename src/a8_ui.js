@@ -198,7 +198,7 @@ function showExport(blob, name, title, isVideo){
 function savePhoto(){
   const aimWas = S.aim; S.aim = false; frameUniforms();
   renderer.setRenderTarget(null); renderer.clear(); renderer.render(scene, camera);
-  canvas.toBlob(b => { S.aim = aimWas; if (b) showExport(b, 'spraylab-photo.png', 'Photo of the yard'); }, 'image/png');
+  canvas.toBlob(b => { S.aim = aimWas; if (b) showExport(b, 'spray-photo.png', 'Photo of the yard'); }, 'image/png');
 }
 function saveFlat(){
   const W = (S.mode === 'build' && selWall) || me.wall || (G.sel && G.sel.wall) || walls[0];
@@ -211,7 +211,7 @@ function saveFlat(){
   for (let y=0;y<W.RH;y++){ const sr = (W.RH-1-y)*W.RW*4, dr = y*W.RW*4;
     for (let x=0;x<W.RW*4;x+=4){ const a = buf[sr+x+3]; if (!a) continue; const k = 255/a; d[dr+x]=buf[sr+x]*k; d[dr+x+1]=buf[sr+x+1]*k; d[dr+x+2]=buf[sr+x+2]*k; d[dr+x+3]=a; } }
   pctx.putImageData(id, 0, 0); ctx.drawImage(pc, 0, 0);
-  out.toBlob(b => { if (b) showExport(b, 'spraylab-wall.png', `Flat wall, ${W.RW}×${W.RH}`); }, 'image/png');
+  out.toBlob(b => { if (b) showExport(b, 'spray-wall.png', `Flat wall, ${W.RW}×${W.RH}`); }, 'image/png');
 }
 
 function wireUI(){

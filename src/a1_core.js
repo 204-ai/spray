@@ -18,7 +18,7 @@ const hex = (r,g,b) => '#' + [r,g,b].map(v => Math.round(clamp(v,0,255)).toStrin
 const uid = () => Math.random().toString(36).slice(2, 10);
 let toastT = 0;
 function toast(msg){ const t = $('#toast'); t.textContent = msg; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => t.style.opacity = 0, 2600); }
-function fatal(msg){ document.body.insertAdjacentHTML('beforeend', `<div id="err"><div><div class="logo">SPRAYLAB</div><p>${msg}</p></div></div>`); const l = $('#loading'); if (l) l.hidden = true; }
+function fatal(msg){ document.body.insertAdjacentHTML('beforeend', `<div id="err"><div><div class="logo">SPRAY</div><p>${msg}</p></div></div>`); const l = $('#loading'); if (l) l.hidden = true; }
 
 /* ---------------- renderer ---------------- */
 const canvas = $('#gl');

@@ -1,4 +1,4 @@
-# Checks the build and publishes Spraylab to GitHub Pages on every push to main.
+# Checks the build and publishes Spray to GitHub Pages on every push to main.
 # One-time setup: repo Settings → Pages → Source: "GitHub Actions"; custom domain spray.jas.black.
 name: Deploy to GitHub Pages
 

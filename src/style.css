@@ -1,4 +1,4 @@
-/* Spraylab in the JAS.BLACK console look (Fault / Code Painter family).
+/* Spray in the JAS.BLACK console look (Fault / Code Painter family).
    Layout: a 42px top bar; below it either a docked panel beside a framed monitor (body.dock) or the 3D yard full-bleed with the bar and panel floating over it (body.float). */
 :root{color-scheme:dark;--accent:#39ff88;--accent2:#b36bff;--case:#121314;--panel:#18191b;--line:#26272a;--key:#222326;--keyon:#1b1c1e;--keyline:#303135;--shadow:#070708;--text:#e4e4e1;--muted:#929399;--track:#2e2f33;--well:#141517;--ink:#e4e4e1;--inktext:#121314;--knob:#2c2d31;--ledoff:#34353a;--warn:#ff3b30;
   --wide:'Archivo','Arial Black',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;

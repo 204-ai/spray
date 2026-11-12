@@ -1,6 +1,6 @@
-# SPRAYLAB / FIELD NOTES
+# SPRAY / FIELD NOTES
 
-Every control in Spraylab, and what it is doing underneath.
+Every control in Spray, and what it is doing underneath.
 
 ## The console
 

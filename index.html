@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' data: blob: https://cdn.jsdelivr.net https://storage.googleapis.com; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Spraylab - JAS.BLACK</title>
+<title>Spray - JAS.BLACK</title>
 <meta name="description" content="A 3D graffiti wall studio in the browser: real spray caps, paint markers, image guides, auto paint and time-lapse export.">
 <meta name="theme-color" content="#121314">
-<meta property="og:title" content="Spraylab - JAS.BLACK">
+<meta property="og:title" content="Spray - JAS.BLACK">
+<meta name="twitter:title" content="Spray - JAS.BLACK">
 <meta property="og:description" content="Paint a yard of walls, one can at a time.">
 <meta property="og:image" content="https://spray.jas.black/og.png">
 <meta property="og:url" content="https://spray.jas.black/">
@@ -20,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-/* Spraylab in the JAS.BLACK console look (Fault / Code Painter family).
+/* Spray in the JAS.BLACK console look (Fault / Code Painter family).
    Layout: a 42px top bar; below it either a docked panel beside a framed monitor (body.dock) or the 3D yard full-bleed with the bar and panel floating over it (body.float). */
 :root{color-scheme:dark;--accent:#39ff88;--accent2:#b36bff;--case:#121314;--panel:#18191b;--line:#26272a;--key:#222326;--keyon:#1b1c1e;--keyline:#303135;--shadow:#070708;--text:#e4e4e1;--muted:#929399;--track:#2e2f33;--well:#141517;--ink:#e4e4e1;--inktext:#121314;--knob:#2c2d31;--ledoff:#34353a;--warn:#ff3b30;
   --wide:'Archivo','Arial Black',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -179,9 +180,9 @@ body.float footer#foot{display:none}
 </style>
 </head>
 <body class="dock">
-<div id="loading"><div><div class="logo">SPRAYLAB</div><p id="loadMsg">Mixing paint…</p></div></div>
+<div id="loading"><div><div class="logo">SPRAY</div><p id="loadMsg">Mixing paint…</p></div></div>
 <header id="bar">
-  <div class="hl"><span class="brand">SPRAYLAB</span><span class="brand-ver">v1.0.0</span>
+  <div class="hl"><span class="brand">SPRAY</span><span class="brand-ver">v1.0.1</span>
     <nav class="view-switch" id="modeBar" aria-label="Mode"><button data-mode="paint" class="on" title="Paint (P)">paint</button><button data-mode="arrange" title="Move, scale and rotate images (M)">images</button><button data-mode="build" title="Add and place walls (B)">build</button></nav>
     <div class="status"><span><i class="led"></i>saved</span><span><i class="led off" id="ledHands"></i>hands</span></div></div>
   <div class="transport">
@@ -386,7 +387,7 @@ body.float footer#foot{display:none}
 </div>
 </div>
 </main>
-<footer id="foot"><span><kbd>click</kbd><small>spray</small><kbd>wheel</kbd><small>zoom</small><kbd>mid-drag</kbd><small>look</small><kbd>wasd</kbd><small>walk</small><kbd>h</kbd><small>tools</small><kbd>home</kbd><small>back to wall</small></span><span class="tagline">SPRAYLAB · A YARD OF WALLS, ONE CAN AT A TIME</span></footer>
+<footer id="foot"><span><kbd>click</kbd><small>spray</small><kbd>wheel</kbd><small>zoom</small><kbd>mid-drag</kbd><small>look</small><kbd>wasd</kbd><small>walk</small><kbd>h</kbd><small>tools</small><kbd>home</kbd><small>back to wall</small></span><span class="tagline">SPRAY · A YARD OF WALLS, ONE CAN AT A TIME</span></footer>
 
 
 <div id="dropOverlay" hidden>Drop it on a wall</div>
@@ -406,7 +407,7 @@ const CAN_TEX = "data:image/webp;base64,UklGRqhkBQBXRUJQVlA4WAoAAAAgAAAAzwcAzwcA
 </script>
 <script>
 (function(){
-if (!window.THREE) { document.body.insertAdjacentHTML('beforeend','<div id="err"><div><div class="logo">SPRAYLAB</div><p>The 3D engine could not load. Reload the page to try again.</p></div></div>'); return; }
+if (!window.THREE) { document.body.insertAdjacentHTML('beforeend','<div id="err"><div><div class="logo">SPRAY</div><p>The 3D engine could not load. Reload the page to try again.</p></div></div>'); return; }
 'use strict';
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -427,7 +428,7 @@ const hex = (r,g,b) => '#' + [r,g,b].map(v => Math.round(clamp(v,0,255)).toStrin
 const uid = () => Math.random().toString(36).slice(2, 10);
 let toastT = 0;
 function toast(msg){ const t = $('#toast'); t.textContent = msg; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => t.style.opacity = 0, 2600); }
-function fatal(msg){ document.body.insertAdjacentHTML('beforeend', `<div id="err"><div><div class="logo">SPRAYLAB</div><p>${msg}</p></div></div>`); const l = $('#loading'); if (l) l.hidden = true; }
+function fatal(msg){ document.body.insertAdjacentHTML('beforeend', `<div id="err"><div><div class="logo">SPRAY</div><p>${msg}</p></div></div>`); const l = $('#loading'); if (l) l.hidden = true; }
 
 /* ---------------- renderer ---------------- */
 const canvas = $('#gl');
@@ -2399,7 +2400,7 @@ function showExport(blob, name, title, isVideo){
 function savePhoto(){
   const aimWas = S.aim; S.aim = false; frameUniforms();
   renderer.setRenderTarget(null); renderer.clear(); renderer.render(scene, camera);
-  canvas.toBlob(b => { S.aim = aimWas; if (b) showExport(b, 'spraylab-photo.png', 'Photo of the yard'); }, 'image/png');
+  canvas.toBlob(b => { S.aim = aimWas; if (b) showExport(b, 'spray-photo.png', 'Photo of the yard'); }, 'image/png');
 }
 function saveFlat(){
   const W = (S.mode === 'build' && selWall) || me.wall || (G.sel && G.sel.wall) || walls[0];
@@ -2412,7 +2413,7 @@ function saveFlat(){
   for (let y=0;y<W.RH;y++){ const sr = (W.RH-1-y)*W.RW*4, dr = y*W.RW*4;
     for (let x=0;x<W.RW*4;x+=4){ const a = buf[sr+x+3]; if (!a) continue; const k = 255/a; d[dr+x]=buf[sr+x]*k; d[dr+x+1]=buf[sr+x+1]*k; d[dr+x+2]=buf[sr+x+2]*k; d[dr+x+3]=a; } }
   pctx.putImageData(id, 0, 0); ctx.drawImage(pc, 0, 0);
-  out.toBlob(b => { if (b) showExport(b, 'spraylab-wall.png', `Flat wall, ${W.RW}×${W.RH}`); }, 'image/png');
+  out.toBlob(b => { if (b) showExport(b, 'spray-wall.png', `Flat wall, ${W.RW}×${W.RH}`); }, 'image/png');
 }
 
 function wireUI(){
@@ -2575,7 +2576,7 @@ function startRecording(kind){
     const ext = REC.mime.includes('mp4') ? 'mp4' : 'webm', blob = new Blob(REC.chunks, {type:REC.mime.split(';')[0]});
     REC.stream.getTracks().forEach(t => t.stop());
     const secs = Math.round((performance.now() - REC.t0) / 1000);
-    showExport(blob, `spraylab-${REC.kind === 'timelapse' ? 'timelapse' : 'recording'}.${ext}`, `${REC.kind === 'timelapse' ? 'Time-lapse' : 'Recording'} · ${secs} s · ${ext.toUpperCase()}`, true);
+    showExport(blob, `spray-${REC.kind === 'timelapse' ? 'timelapse' : 'recording'}.${ext}`, `${REC.kind === 'timelapse' ? 'Time-lapse' : 'Recording'} · ${secs} s · ${ext.toUpperCase()}`, true);
   };
   REC.rec.start(500);
   $('#recBtn').textContent = 'Stop recording'; $('#recBtn').classList.add('armed'); $('#hudRec').hidden = false;
@@ -2905,13 +2906,13 @@ function exportProject(){
     const out = { app:'spraylab', v:1, scene:sceneState(), paint:{}, images:{} };
     for (const W of walls){ const c = wallPaintCanvas(W); if (c) out.paint[W.id] = c.toDataURL('image/png'); }
     for (const L of allLayers()) out.images[L.id] = layerCanvas(L).toDataURL('image/png');
-    saveBlob(new Blob([JSON.stringify(out)], {type:'application/json'}), 'spraylab-project.json');
+    saveBlob(new Blob([JSON.stringify(out)], {type:'application/json'}), 'spray-project.json');
   }, 30);
 }
 async function importProject(file){
   let data;
-  try { data = JSON.parse(await file.text()); } catch (e) { toast('That file is not a Spraylab project'); return; }
-  if (!data || data.app !== 'spraylab' || !data.scene || !Array.isArray(data.scene.walls)){ toast('That file is not a Spraylab project'); return; }
+  try { data = JSON.parse(await file.text()); } catch (e) { toast('That file is not a Spray project'); return; }
+  if (!data || data.app !== 'spraylab' || !data.scene || !Array.isArray(data.scene.walls)){ toast('That file is not a Spray project'); return; }
   const pick = map => async id => { const s = map && map[id]; return (typeof s === 'string' && s.startsWith('data:image/')) ? loadImg(s) : null; };
   STORE.busy = true; $('#loadMsg').textContent = 'Opening the project…'; $('#loading').hidden = false;
   await new Promise(r => setTimeout(r, 30));

@@ -29,7 +29,7 @@ def build():
     read = lambda name: (SRC / name).read_text()
     app = '\n'.join(read(p) for p in PARTS)
     body = read('body.html').replace('{{VERSION}}', version)
-    fail = ("document.body.insertAdjacentHTML('beforeend','<div id=\"err\"><div><div class=\"logo\">SPRAYLAB</div>"
+    fail = ("document.body.insertAdjacentHTML('beforeend','<div id=\"err\"><div><div class=\"logo\">SPRAY</div>"
             "<p>The 3D engine could not load. Reload the page to try again.</p></div></div>');")
     return f'''<!doctype html>
 <html lang="en">
@@ -37,10 +37,11 @@ def build():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="{CSP}">
-<title>Spraylab - JAS.BLACK</title>
+<title>Spray - JAS.BLACK</title>
 <meta name="description" content="A 3D graffiti wall studio in the browser: real spray caps, paint markers, image guides, auto paint and time-lapse export.">
 <meta name="theme-color" content="#121314">
-<meta property="og:title" content="Spraylab - JAS.BLACK">
+<meta property="og:title" content="Spray - JAS.BLACK">
+<meta name="twitter:title" content="Spray - JAS.BLACK">
 <meta property="og:description" content="Paint a yard of walls, one can at a time.">
 <meta property="og:image" content="https://spray.jas.black/og.png">
 <meta property="og:url" content="https://spray.jas.black/">

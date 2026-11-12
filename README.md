@@ -1,4 +1,4 @@
-# SPRAYLAB by JAS.BLACK
+# SPRAY by JAS.BLACK
 
 Version 1.0.0
 
@@ -6,9 +6,9 @@ Version 1.0.0
 
 **[Open it: spray.jas.black](https://spray.jas.black)** · **[The guide: every control, how it works](docs/GUIDE.md)**
 
-![SPRAYLAB console](docs/screenshot.png)
+![SPRAY console](docs/screenshot.png)
 
-Spraylab puts a floating spray can in front of a yard of walls. Paint lands on the surface the way it does outside: soft mist from far away, sharp lines up close, and drips when you hold still too long. Drop any picture onto a wall and it becomes a see-through guide, split into numbered colour shapes and outlines to paint over. Auto paint can then paint it for you, the way a writer would, and record the result as a time-lapse. Everything runs on your GPU in the browser. Nothing is uploaded and no account is needed.
+Spray puts a floating spray can in front of a yard of walls. Paint lands on the surface the way it does outside: soft mist from far away, sharp lines up close, and drips when you hold still too long. Drop any picture onto a wall and it becomes a see-through guide, split into numbered colour shapes and outlines to paint over. Auto paint can then paint it for you, the way a writer would, and record the result as a time-lapse. Everything runs on your GPU in the browser. Nothing is uploaded and no account is needed.
 
 ## Quick start
 
@@ -89,7 +89,7 @@ One-time setup:
 
 ## Status
 
-Works in current desktop browsers. Phones and tablets can paint with touch, but the panel is cramped on small screens. Hand tracking needs a webcam and downloads the MediaPipe hand model from cdn.jsdelivr.net and storage.googleapis.com when you start the camera. Live multi-user painting only works when Spraylab is opened as a shared Claude artifact, so it is hidden on the website.
+Works in current desktop browsers. Phones and tablets can paint with touch, but the panel is cramped on small screens. Hand tracking needs a webcam and downloads the MediaPipe hand model from cdn.jsdelivr.net and storage.googleapis.com when you start the camera. Live multi-user painting only works when Spray is opened as a shared Claude artifact, so it is hidden on the website.
 
 ## Licence and credits
 

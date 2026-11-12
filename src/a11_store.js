@@ -115,13 +115,13 @@ function exportProject(){
     const out = { app:'spraylab', v:1, scene:sceneState(), paint:{}, images:{} };
     for (const W of walls){ const c = wallPaintCanvas(W); if (c) out.paint[W.id] = c.toDataURL('image/png'); }
     for (const L of allLayers()) out.images[L.id] = layerCanvas(L).toDataURL('image/png');
-    saveBlob(new Blob([JSON.stringify(out)], {type:'application/json'}), 'spraylab-project.json');
+    saveBlob(new Blob([JSON.stringify(out)], {type:'application/json'}), 'spray-project.json');
   }, 30);
 }
 async function importProject(file){
   let data;
-  try { data = JSON.parse(await file.text()); } catch (e) { toast('That file is not a Spraylab project'); return; }
-  if (!data || data.app !== 'spraylab' || !data.scene || !Array.isArray(data.scene.walls)){ toast('That file is not a Spraylab project'); return; }
+  try { data = JSON.parse(await file.text()); } catch (e) { toast('That file is not a Spray project'); return; }
+  if (!data || data.app !== 'spraylab' || !data.scene || !Array.isArray(data.scene.walls)){ toast('That file is not a Spray project'); return; }
   const pick = map => async id => { const s = map && map[id]; return (typeof s === 'string' && s.startsWith('data:image/')) ? loadImg(s) : null; };
   STORE.busy = true; $('#loadMsg').textContent = 'Opening the project…'; $('#loading').hidden = false;
   await new Promise(r => setTimeout(r, 30));
