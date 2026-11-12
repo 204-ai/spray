@@ -3057,8 +3057,10 @@ function whipOut(url){
   const stream = canvas.captureStream(30), track = stream.getVideoTracks()[0];
   try { track.contentHint = 'motion'; } catch (e) {}
   return keepLink('picture out', async pc => {
-    pc.addTransceiver(track, { direction:'sendonly', streams:[stream], sendEncodings:[{ maxBitrate:8e6, maxFramerate:30 }] });
+    const tr = pc.addTransceiver(track, { direction:'sendonly', streams:[stream], sendEncodings:[{ maxBitrate:8e6, maxFramerate:30 }] });
     await sdpExchange(pc, url);
+    // a slow start or a busy machine drops frames, never the picture's size
+    try { const p = tr.sender.getParameters(); p.degradationPreference = 'maintain-resolution'; await tr.sender.setParameters(p); } catch (e) {}
   });
 }
 
